@@ -7,7 +7,7 @@ You can configure Zemote into any kind of remote control.
 
 The best thing about Zemote is that you can program a button to do multiple things. For example, you can configure the power button to power the television, air conditioner and sound system in one go.
 
-The Zemote hardware consits of 6 buttons and their corresponding actions are shown below.
+The Zemote hardware includes 6 buttons and their corresponding actions are shown below.
 
 Button  | Action
 ------------- | -------------
