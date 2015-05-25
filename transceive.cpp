@@ -80,8 +80,7 @@ void sndIRStream(unsigned char button)
       case JVC:
         irsend.sendJVC(tmpValue, tmpBits, 1); // With JVC repeat signal
         break;
-      case SAMSUNG:
-        irsend.sendSAMSUNG(tmpValue, tmpBits);
+      default:
         break;      
       }
       delay(200);
@@ -192,9 +191,8 @@ void printDecodeTypeString(int decode_type)
   case JVC:
     Serial.print("JVC");
     break;
-  case SAMSUNG:
-    Serial.print("SAMSUNG");
-    break;      
+  default:
+    break;
   } 
 }
 
