@@ -27,6 +27,7 @@
 char cmdBuffer[128];
 unsigned char cmdIdx=0;
 unsigned char activeBtnNum=0;
+boolean simpleModeEnabled = false;
 
 // Local functions
 void getAddr();
@@ -93,7 +94,8 @@ boolean processCmd()
   char firstCmd = cmdBuffer[0];
 
   // Command buffer checking
-  if (firstCmd == 'G' || firstCmd == 'T' || firstCmd == 'P')
+  if (firstCmd == 'G' || firstCmd == 'T' || 
+    firstCmd == 'P' || firstCmd == 'X')
   {
     if (cmdBuffer[2] != '\n')
     {
@@ -111,6 +113,19 @@ boolean processCmd()
   // Execute commands
   switch(firstCmd)
   {
+  case 'M':
+    if (simpleModeEnabled)
+    {
+      Serial.println("Simple Mode"); 
+    }
+    else
+    {
+      Serial.println("TV Mode");  
+    }
+    break;
+  case 'X':    
+    simpleModeEnabled = cmdBuffer[1] -'0';
+    break;
   case 'T':
     if (!checkInputButtonCmd())
     {
@@ -137,7 +152,7 @@ boolean processCmd()
     enableIRReceive();
     // Action while loop to be done in main loop
     break;
-  case 'F':
+  case 'F':  
     disableIRReceive();
     break;
   case 'L':
@@ -157,6 +172,10 @@ boolean processCmd()
   return true;
 }
 
+/**
+ * \fn boolean checkInputButtonCmd()
+ * \brief Checks the commands and converts the cmdBuffer[1] to button number
+ */
 boolean checkInputButtonCmd()
 {
   activeBtnNum = cmdBuffer[1] - '0';
@@ -173,7 +192,8 @@ boolean checkInputButtonCmd()
  */
 int getAddr(int buttonLen, int cmdLen)
 {
-  return (buttonLen * NUM_COMMANDS_PER_BUTTON + cmdLen) * NUM_BYTES_PER_COMMAND;
+  // The offset 1 is added for the simpleModeEnabled variable
+  return (buttonLen * NUM_COMMANDS_PER_BUTTON + cmdLen) * NUM_BYTES_PER_COMMAND + 1;
 }
 
 /**
@@ -183,7 +203,9 @@ int getAddr(int buttonLen, int cmdLen)
 void saveToEEPROM()
 {  
   unsigned char tmpValue;
-  int k;
+  int k;  
+
+  EEPROM.write(0, simpleModeEnabled);
 
   for (int i=0; i<NUM_SOFT_BUTTONS; i++)
   {
@@ -234,6 +256,8 @@ void readFromEEPROM()
   unsigned long tmpValue2, tmpSum;
   int k;
 
+  simpleModeEnabled = EEPROM.read(0);
+
   for (int i=0; i<NUM_SOFT_BUTTONS; i++)
   {
     for (int j=0; j<NUM_COMMANDS_PER_BUTTON; j++)
@@ -279,6 +303,7 @@ void readFromEEPROM()
 #endif
   }
 }
+
 
 
 

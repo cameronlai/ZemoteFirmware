@@ -1,19 +1,19 @@
 /* 
-* This file is part of ZemoteFirmware.
-* 
-* ZemoteFirmware is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-* 
-* ZemoteFirmware is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-* 
-* You should have received a copy of the GNU General Public License
-* along with ZemoteFirmware.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ * This file is part of ZemoteFirmware.
+ * 
+ * ZemoteFirmware is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * ZemoteFirmware is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with ZemoteFirmware.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include "pins.h"
 #include "button.h"
@@ -73,14 +73,28 @@ void button_send_handler(unsigned char button){
     sndIRStream(HOME_CHANNEL);
     break;
   case 4: // Channel Plus Button
-    findAvailableChannel(1);
+    if (simpleModeEnabled)
+    {
+      current_channel = SIMPLE_MODE_UP_CHANNEL;
+    }
+    else
+    {
+      findAvailableChannel(1);
+    }
 #if DEBUG==1
     Serial.println(current_channel, DEC);
 #endif
     sndIRStream(current_channel);
     break;
   case 5: // Channel Minus Button
-    findAvailableChannel(-1);
+    if (simpleModeEnabled)
+    {
+      current_channel = SIMPLE_MODE_DOWN_CHANNEL;
+    }
+    else
+    {
+      findAvailableChannel(-1);
+    }
 #if DEBUG==1
     Serial.println(current_channel, DEC);
 #endif
@@ -92,6 +106,10 @@ void button_send_handler(unsigned char button){
   }
 }
 
+/**
+ * \fn void findAvailableChannel(int change)
+ * \brief Bounds the channels by home channel and max. no. of channels
+ */
 void findAvailableChannel(int change)
 {
   for (int i = 1; i <= NUM_PHY_BUTTONS; i+=change)
@@ -111,6 +129,7 @@ void findAvailableChannel(int change)
     }
   }    
 }
+
 
 
 

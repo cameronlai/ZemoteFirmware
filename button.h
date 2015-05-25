@@ -21,6 +21,8 @@
 #define NUM_PHY_BUTTONS 6
 #define NUM_CHANNELS 6
 #define HOME_CHANNEL 3
+#define SIMPLE_MODE_UP_CHANNEL 4
+#define SIMPLE_MODE_DOWN_CHANNEL 5
 #define DEBOUNCE_DELAY 50 // ms
 
 /*
@@ -38,6 +40,8 @@
  */
 const char buttons[6] = {
   PWR_PIN, V_PLUS_PIN, V_MINUS_PIN, HOME_PIN, CH_PLUS_PIN, CH_MINUS_PIN};
+
+extern boolean simpleModeEnabled;
 
 void check_buttons();
 void button_send_handler(unsigned char button);
