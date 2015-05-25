@@ -131,7 +131,6 @@ boolean processCmd()
     {
       return false;
     }
-    Serial.println(activeBtnNum);
     sndIRStream(activeBtnNum);  
     break;
   case 'S':
