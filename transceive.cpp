@@ -1,19 +1,19 @@
 /* 
-* This file is part of ZemoteFirmware.
-* 
-* ZemoteFirmware is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-* 
-* ZemoteFirmware is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-* 
-* You should have received a copy of the GNU General Public License
-* along with ZemoteFirmware.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ * This file is part of ZemoteFirmware.
+ * 
+ * ZemoteFirmware is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * ZemoteFirmware is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with ZemoteFirmware.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include <IRremote.h>
 
@@ -119,7 +119,7 @@ boolean rcvIRStream()
 
       user_cmd[activeBtnNum][user_cmd_index++] = tmpCmd;
       user_cmd_len[activeBtnNum]++;
-      
+
       printResultsInfo(user_cmd_index, tmpCmd);
     }
     irrecv.resume(); // Receive the next value
@@ -134,7 +134,15 @@ boolean rcvIRStream()
 void serial_ack(char cmd)
 {
   Serial.print("ok - ");
-  Serial.println(cmd); 
+  if(cmd == 'F')
+  {
+    Serial.print(cmd);
+    Serial.println((int)user_cmd_len[activeBtnNum]);
+  }
+  else
+  {
+    Serial.println(cmd); 
+  }
 }
 
 void serial_error(char cmd)
@@ -203,6 +211,7 @@ void printAllButtonLength()
     Serial.println((int)user_cmd_len[i]);
   }  
 }
+
 
 
 
