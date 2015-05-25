@@ -1,19 +1,19 @@
 /* 
-* This file is part of ZemoteFirmware.
-* 
-* ZemoteFirmware is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-* 
-* ZemoteFirmware is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-* 
-* You should have received a copy of the GNU General Public License
-* along with ZemoteFirmware.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ * This file is part of ZemoteFirmware.
+ * 
+ * ZemoteFirmware is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * ZemoteFirmware is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with ZemoteFirmware.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #define VERSION_NUM 0.1
 
@@ -90,7 +90,26 @@ void loop()
 boolean processCmd()
 {
   unsigned char retVal=0;
-  switch(cmdBuffer[0])
+  char firstCmd = cmdBuffer[0];
+
+  // Command buffer checking
+  if (firstCmd == 'G' || firstCmd == 'T' || firstCmd == 'P')
+  {
+    if (cmdBuffer[2] != '\n')
+    {
+      return false;
+    } 
+  }
+  else
+  {
+    if (cmdBuffer[1] != '\n')
+    {
+      return false;
+    } 
+  }
+
+  // Execute commands
+  switch(firstCmd)
   {
   case 'T':
     if (!checkInputButtonCmd())
@@ -260,6 +279,7 @@ void readFromEEPROM()
 #endif
   }
 }
+
 
 
 
