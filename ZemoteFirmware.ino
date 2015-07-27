@@ -88,6 +88,10 @@ void loop()
   check_buttons();
 }
 
+/**
+ * \fn boolean processCmd()
+ * \brief Command processor for specific commands
+ */
 boolean processCmd()
 {
   unsigned char retVal=0;

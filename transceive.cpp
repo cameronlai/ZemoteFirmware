@@ -88,6 +88,10 @@ void sndIRStream(unsigned char button)
   }
 }
 
+/**
+ * \fn void enableIRReceive()
+ * \brief Enable receiver to receive commands from IR receiver
+ */
 void enableIRReceive()
 {
   irrecv.enableIRIn(); // Start the receiver
@@ -96,6 +100,10 @@ void enableIRReceive()
   user_cmd_len[activeBtnNum] = 0;
 }
 
+/**
+ * \fn void disableIRReceive()
+ * \brief Disable receiver to receive commands from IR receiver
+ */
 void disableIRReceive()
 {
   programModeFlag = false;
@@ -131,6 +139,10 @@ boolean rcvIRStream()
   return true;
 }
 
+/**
+ * \fn void serial_ack(char cmd)
+ * \brief Acknowledge serial commands
+ */
 void serial_ack(char cmd)
 {
   Serial.print("ok - ");
@@ -145,12 +157,20 @@ void serial_ack(char cmd)
   }
 }
 
+/**
+ * \fn void serial_error(char cmd)
+ * \brief Print serial error
+ */
 void serial_error(char cmd)
 {
   Serial.print("error - ");
   Serial.println(cmd);  
 }
 
+/**
+ * \fn void printButtonInfo(unsigned char button)
+ * \brief Print all commands loaded for the button / channel
+ */
 void printButtonInfo(unsigned char button)
 {
   if (user_cmd_len[button] > 0)
@@ -162,6 +182,10 @@ void printButtonInfo(unsigned char button)
   }  
 }
 
+/**
+ * \fn void printResultsInfo(int index, zemote_decode localResults)
+ * \brief Print raw IR code received
+ */
 void printResultsInfo(int index, zemote_decode localResults)
 {
   Serial.print(index);
@@ -171,6 +195,10 @@ void printResultsInfo(int index, zemote_decode localResults)
   Serial.println(localResults.value, HEX);
 }
 
+/**
+ * \fn void printDecodeTypeString(int decode_type)
+ * \brief Print the IR command type
+ */
 void printDecodeTypeString(int decode_type)
 {
   switch (decode_type)
@@ -204,6 +232,10 @@ void printDecodeTypeString(int decode_type)
   } 
 }
 
+/**
+ * \fn void printAllButtonLength()
+ * \brief Print out all button / channel command lengths
+ */
 void printAllButtonLength()
 {
   for(int i=0;i<NUM_SOFT_BUTTONS;i++)
