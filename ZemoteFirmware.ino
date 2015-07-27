@@ -15,7 +15,7 @@
  * along with ZemoteFirmware.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#define VERSION_NUM 0.1
+#define VERSION_NUM 1.0
 
 #include <IRremote.h>
 #include <EEPROM.h>
