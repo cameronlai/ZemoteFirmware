@@ -71,7 +71,7 @@ void button_send_handler(unsigned char button){
   {
   case 3: // Home Button
     sndIRStream(HOME_CHANNEL);
-HOME_CHANNELHOME_CHANNELHOME_CHANNELHOME_CHANNEL    current_channel = HOME_CHANNEL;
+    current_channel = HOME_CHANNEL;
     break;
   case 4: // Channel Plus Button
     if (simpleModeEnabled)
@@ -130,6 +130,7 @@ void findAvailableChannel(int change)
     }
   }    
 }
+
 
 
 
